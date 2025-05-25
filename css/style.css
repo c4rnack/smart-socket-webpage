@@ -1,0 +1,267 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+h1, h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+h1 {
+    font-size: 2.2em;
+}
+
+h2 {
+    font-size: 1.6em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-top: 30px;
+}
+
+/* Картки */
+.socket-status-card,
+.socket-control-card,
+.schedule-card {
+    background-color: #fdfdfd;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Статус розетки */
+.socket-status-card p {
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.status-online {
+    color: #28a745; /* Зелений */
+    font-weight: bold;
+}
+
+.status-offline {
+    color: #dc3545; /* Червоний */
+    font-weight: bold;
+}
+
+/* Перемикач живлення */
+.socket-control-card .toggle-switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 1.1em;
+}
+
+/* Стиль перемикача (toggle switch) */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Форма розкладу */
+.schedule-form {
+    background-color: #f0f8ff;
+    border: 1px solid #cceeff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.schedule-form h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #3498db;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input[type="time"],
+.form-group input[type="text"] { /* На випадок якщо буде поле для імені розкладу */
+    width: calc(100% - 22px); /* З урахуванням padding та border */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.days-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.days-checkboxes label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.days-checkboxes input[type="checkbox"] {
+    margin-right: 5px;
+    width: auto; /* Перевизначити width: 100% */
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Список розкладів */
+.schedule-item {
+    background-color: #eaf7ff;
+    border: 1px solid #b3d9ff;
+    border-left: 5px solid #3498db;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+}
+
+.schedule-item p {
+    margin: 0;
+}
+
+.schedule-item .delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background-color 0.3s ease;
+}
+
+.schedule-item .delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Медіа-запити для адаптивності */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    h2 {
+        font-size: 1.4em;
+    }
+    .toggle-switch-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .days-checkboxes {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .schedule-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}

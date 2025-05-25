@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Керування Розумною Розеткою</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Керування Розумною Розеткою</h1>
+
+        <div class="socket-status-card">
+            <h2>Статус Розетки</h2>
+            <p>Статус: <span id="socketStatus" class="status-offline">Офлайн</span></p>
+        </div>
+
+        <div class="socket-control-card">
+            <h2>Керування Живленням</h2>
+            <div class="toggle-switch-container">
+                <label class="switch">
+                    <input type="checkbox" id="powerToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span id="powerStatusText">Вимкнено</span>
+            </div>
+        </div>
+
+        <!-- <div class="schedule-card">
+            <h2>Налаштування Розкладу</h2>
+            <p>Тут ви можете налаштувати автоматичне ввімкнення/вимкнення розетки за розкладом.</p>
+
+            <div id="schedulesList">
+                </div>
+
+            <div class="schedule-form">
+                <h3>Додати Новий Розклад</h3>
+                <div class="form-group">
+                    <label for="scheduleStartTime">Ввімкнути з:</label>
+                    <input type="time" id="scheduleStartTime">
+                </div>
+                <div class="form-group">
+                    <label for="scheduleEndTime">Вимкнути о:</label>
+                    <input type="time" id="scheduleEndTime">
+                </div>
+                <div class="form-group">
+                    <label for="scheduleDays">Дні тижня:</label>
+                    <div class="days-checkboxes">
+                        <label><input type="checkbox" value="mon">Пн</label>
+                        <label><input type="checkbox" value="tue">Вт</label>
+                        <label><input type="checkbox" value="wed">Ср</label>
+                        <label><input type="checkbox" value="thu">Чт</label>
+                        <label><input type="checkbox" value="fri">Пт</label>
+                        <label><input type="checkbox" value="sat">Сб</label>
+                        <label><input type="checkbox" value="sun">Нд</label>
+                    </div>
+                </div>
+                <button id="addScheduleBtn">Додати Розклад</button>
+            </div>
+        </div>
+    </div> -->
+
+    <script src="js/script.js"></script>
+</body>
+</html>
