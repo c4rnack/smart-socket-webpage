@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!response.ok) {
                 const errorData = await response.json();
                 console.log(errorData);
+                return null;
             }
 
             const data = await response.json();
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!response.ok) {
                 const errorData = await response.json();
                 console.log(errorData);
+                return null;
             }
 
             const data = await response.json();
@@ -93,14 +95,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         updatePowerToggleDisplay();
     }
 
-    powerToggle.addEventListener('change', () => {
+    powerToggle.addEventListener('change', async () => {
         if (!isSocketOnline) {
             alert('Розетка офлайн. Неможливо керувати живленням.');
             powerToggle.checked = !powerToggle.checked;
             return;
         }
 
-        isSocketPowered = powerToggle.checked;
+        isPowerToggleChecked = powerToggle.checked;
+        const result = await updateSocketInfo(socketId, isPowerToggleChecked);
+
+        if (result !== null) {
+            isSocketPowered = isPowerToggleChecked;
+        }
+        else {
+            powerToggle.checked = isSocketPowered;
+        }
         updatePowerToggleDisplay();
 
         console.log(`Відправка команди: розетка ${isSocketPowered ? 'Увімкнено' : 'Вимкнено'}`);
