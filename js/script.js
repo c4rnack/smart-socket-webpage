@@ -1,10 +1,75 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const socketStatusSpan = document.getElementById('socketStatus');
     const powerToggle = document.getElementById('powerToggle');
     const powerStatusText = document.getElementById('powerStatusText');
 
-    let isSocketOnline = true; 
-    let isSocketPowered = true;
+    const socketId = 1;
+
+    let isSocketOnline = false;
+    let isSocketPowered = false;
+
+    async function getSocketInfo(socketId) {
+        try {
+            const response = await fetch(`https://smart-socket-api.onrender.com/info/${socketId}`);
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData);
+            }
+
+            const data = await response.json();
+            console.log(data);
+            return data;
+        }
+        catch (err) {
+            console.log(err);
+            return null;
+        }
+    }
+
+    async function updateSocketInfo(socketId, isSocketPowered) {
+        try {
+            const response = await fetch('https://smart-socket-api.onrender.com/info', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({id: socketId, is_on: isSocketPowered}),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData);
+            }
+
+            const data = await response.json();
+            return data;
+        }
+        catch (err) {
+            console.log(err);
+            return null;
+        }
+    }
+
+    function getIsSocketOnline(lastSeenString, thresholdMinutes = 1) {
+        if (!lastSeenString) {
+            return false;
+        }
+        try {
+            const lastSeenDate = new Date(lastSeenString);
+            const now = new Date();
+
+            const differenceMs = now.getTime() - lastSeenDate.getTime();
+
+            const thresholdMs = thresholdMinutes * 60 * 1000;
+
+            return differenceMs <= thresholdMs;
+        }
+        catch (err) {
+            console.log(err);
+            return false
+        }
+    }
 
     function updateSocketStatusDisplay() {
         if (isSocketOnline) {
@@ -24,13 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadInitialState() {
-        isSocketOnline = true;
-        isSocketPowered = true;
         updateSocketStatusDisplay();
         updatePowerToggleDisplay();
-
-        const savedSchedules = JSON.parse(localStorage.getItem('socketSchedules')) || [];
-        savedSchedules.forEach(schedule => addScheduleToDOM(schedule.startTime, schedule.endTime, schedule.days));
     }
 
     powerToggle.addEventListener('change', () => {
@@ -46,25 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Відправка команди: розетка ${isSocketPowered ? 'Увімкнено' : 'Вимкнено'}`);
     });
 
-    function simulateApiCall(action, data) {
-        console.log(`Імітація API: ${action} з даними:`, data);
-        return new Promise(resolve => setTimeout(() => {
-            console.log(`Імітація API: ${action} виконано.`);
-            resolve();
-        }, 500));
+//------------------------------------------------------------------------------------------
+    smartSocketInfo = await getSocketInfo(socketId);
+    if (smartSocketInfo !== null) {
+        isSocketPowered = smartSocketInfo.is_on;
+        isSocketOnline = getIsSocketOnline(smartSocketInfo.last_seen);
     }
-
-    window.setSocketOnline = () => {
-        isSocketOnline = true;
-        updateSocketStatusDisplay();
-        console.log("Розетка переведена в режим ОНЛАЙН (імітація).");
-    };
-
-    window.setSocketOffline = () => {
-        isSocketOnline = false;
-        updateSocketStatusDisplay();
-        console.log("Розетка переведена в режим ОФЛАЙН (імітація).");
-    };
 
     loadInitialState();
 });
