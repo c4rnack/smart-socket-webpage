@@ -239,6 +239,10 @@ button:hover {
     background-color: #c82333;
 }
 
+.warning-text {
+    color: #dc3545;
+}
+
 /* Медіа-запити для адаптивності */
 @media (max-width: 600px) {
     .container {
