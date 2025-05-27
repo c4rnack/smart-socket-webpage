@@ -115,13 +115,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         console.log(`Відправка команди: розетка ${isSocketPowered ? 'Увімкнено' : 'Вимкнено'}`);
     });
+    
+    async function updateInfoOnPage() {
+        let smartSocketInfo = await getSocketInfo(socketId);
+        if (smartSocketInfo !== null) {
+            isSocketPowered = smartSocketInfo.is_on;
+            isSocketOnline = getIsSocketOnline(smartSocketInfo.last_seen);
+        }
 
-//------------------------------------------------------------------------------------------
-    smartSocketInfo = await getSocketInfo(socketId);
-    if (smartSocketInfo !== null) {
-        isSocketPowered = smartSocketInfo.is_on;
-        isSocketOnline = getIsSocketOnline(smartSocketInfo.last_seen);
+        loadInitialState();
     }
 
-    loadInitialState();
+    updateInfoOnPage();
+    setInterval(updateInfoOnPage, 10000)
 });
